@@ -23,7 +23,7 @@ class TestUserUpdate:
         assert responce.json()["user"]["email"] == create_user[0] + "1"
         assert responce.json()["user"]["name"] == create_user[2] + "1"
 
-    @allure.title("Проверка существующей почты при обновлении параметров пользователя; Ручка: " + URLS.URL_AUTHORIZATION)
+    @allure.title("Проверка существующей почты при обновлении параметров пользователя; Ручка: " + URLS.URL_PATCH_USER)
     @allure.description("Заменяем почту пользователя на почту существующего пользователя, получаем код 403, success=False, message=User with such email already exists")
     def test_change_parameters_mail_already_exist(self, create_user):
         with allure.step('Формирование тел запросов'):
@@ -40,7 +40,7 @@ class TestUserUpdate:
         assert responce.json()["success"] is False
         assert responce.json()["message"] == "User with such email already exists"
 
-    @allure.title("Запрос на обновление параметров mail, name, неавторизованного пользователя; Ручка: " + URLS.URL_AUTHORIZATION)
+    @allure.title("Запрос на обновление параметров mail, name, неавторизованного пользователя; Ручка: " + URLS.URL_PATCH_USER)
     @allure.description("Делаем запрос на изменение параметров, получаем код 401, success=False, message=You should be authorised")
     def test_change_parameters_user_not_auth(self, create_user):
         with allure.step('Формирование тел запросов'):
