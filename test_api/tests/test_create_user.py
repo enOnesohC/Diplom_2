@@ -7,24 +7,18 @@ from data import CreateUser
 
 
 class TestCreateUser:
-    @allure.title("Ручка https://stellarburgers.nomoreparties.site/api/auth/register")
-    @allure.description("Создаём пользователя, позитивный сценарий")
+    @allure.title("Создание пользователя; Ручка: " + URLS.URL_CREATE_USER)
+    @allure.description("Создаём пользователя, позитивный сценарий, получаем код 200, success=True")
     def test_create_user(self):
         with allure.step('Формируем тело запроса'):
-            body = \
-                {
-                    "email":  Functions.generate_random_string(8) + "@yandex.ru",
-                    "password": Functions.generate_random_string(8),
-                    "name": Functions.generate_random_string(8)
-                }
+            body = Functions.create_body()
         with allure.step('Запрос на создание пользователя'):
             responce = requests.post(URLS.URL_CREATE_USER, json=body)
-
         assert responce.status_code == 200
         assert responce.json()["success"] is True
 
-    @allure.title("Ручка https://stellarburgers.nomoreparties.site/api/auth/register")
-    @allure.description("Создаём уже существующего пользователя")
+    @allure.title("Создание пользователя с указанием параметров уже существующего пользователя; Ручка: " + URLS.URL_CREATE_USER)
+    @allure.description("Запрос на создание пользователя, с указанием параметров уже существующего пользователя, получаем код 403, success=False, message=User already exists")
     def test_create_exist_user(self):
         with allure.step('Формируем тело запроса'):
             responce = requests.post(URLS.URL_CREATE_USER, json=CreateUser.BODY_EXIST_USER)
@@ -33,8 +27,8 @@ class TestCreateUser:
         assert responce.json()["success"] is False
         assert responce.json()["message"] == "User already exists"
 
-    @allure.title("Ручка https://stellarburgers.nomoreparties.site/api/auth/register")
-    @allure.description("Создаём пользователя с комбинациями пустых полей")
+    @allure.title("Создание пользователя с комбинациями незаполненных параметров; Ручка: " + URLS.URL_CREATE_USER)
+    @allure.description("Создаём пользователя с комбинациями пустых полей, получаем код 403, success=False, message=Email, password and name are required fields")
     @pytest.mark.parametrize(
         "body",
         [

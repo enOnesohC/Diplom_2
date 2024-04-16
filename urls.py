@@ -1,6 +1,8 @@
 class URLS:
-    URL_CREATE_USER = "https://stellarburgers.nomoreparties.site/api/auth/register"
-    URL_AUTHORIZATION = "https://stellarburgers.nomoreparties.site/api/auth/login"
-    URL_DELETE_USER = "https://stellarburgers.nomoreparties.site/api/auth/user"
-    URL_CREATE_ORDER = "https://stellarburgers.nomoreparties.site/api/ingredients"
-    URL_GET_ORDERS_USER = "https://stellarburgers.nomoreparties.site/api/orders"
+    URL_MAIN = "https://stellarburgers.nomoreparties.site/api"
+    URL_CREATE_USER = URL_MAIN + "/auth/register"
+    URL_AUTHORIZATION = URL_MAIN + "/auth/login"
+    URL_DELETE_USER = URL_MAIN + "/auth/user"
+    URL_CREATE_ORDER = URL_MAIN + "/ingredients"
+    URL_GET_ORDERS_USER = URL_MAIN + "/orders"
+    URL_PATCH_USER = URL_MAIN + "/auth/user"
